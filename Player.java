@@ -7,9 +7,9 @@
 public class Player {
 
 	// Variables
-	int salary; // The salary (cost) of the player for a given game. Set by FanDuel
-	PlayerPosition position; // The position the player is eligible to play for, according to FanDuel
-	PlayerHistory history; // The performance of the player in previous games
+	private int salary; 				// The salary (cost) of the player for a given game. Set by FanDuel
+	private PlayerPosition position; 	// The position the player is eligible to play for, according to FanDuel
+	private PlayerHistory history; 		// The performance of the player in previous games
 
 	// Constructor
 	Player(int salary, PlayerPosition position, PlayerHistory history) {
