@@ -1,3 +1,5 @@
+import java.util.Date;
+
 /**
  * Hold the results of a single MLB game, for a single player.
  * 
@@ -7,6 +9,7 @@
 public class Game {
 
 	// Variables - batters
+	private Date date; // The day the game was played
 	private int singles; // The number of singles the player batted
 	private int doubles; // The number of doubles the player batted
 	private int triples; // The number of triples the player batted
@@ -28,8 +31,10 @@ public class Game {
 	double fantasyPoints; // The number of fantasy points earned during the game
 
 	// Constructor
-	Game(int singles, int doubles, int triples, int homeRuns, int runsBattedIn, int runs, int walks, int stolenBases,
-			int hitByPitches, boolean win, boolean qualityStart, int earnedRuns, int strikeOuts, int inningsPitched) {
+	Game(Date date, int singles, int doubles, int triples, int homeRuns, int runsBattedIn, int runs, int walks,
+			int stolenBases, int hitByPitches, boolean win, boolean qualityStart, int earnedRuns, int strikeOuts,
+			int inningsPitched) {
+		this.date = date;
 		this.singles = singles;
 		this.doubles = doubles;
 		this.triples = triples;
@@ -48,6 +53,13 @@ public class Game {
 	}
 
 	// Methods
+
+	/**
+	 * @return the date
+	 */
+	public Date getDate() {
+		return date;
+	}
 
 	/**
 	 * @return the singles
@@ -171,7 +183,7 @@ public class Game {
 		score += earnedRuns * -3.0;
 		score += strikeOuts * 3.0;
 		score += inningsPitched * 3.0;
-		
+
 		return score;
 
 	}
