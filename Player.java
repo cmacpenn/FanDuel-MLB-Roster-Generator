@@ -7,9 +7,10 @@
 public class Player {
 
 	// Variables
-	private int salary; 				// The salary (cost) of the player for a given game. Set by FanDuel
-	private PlayerPosition position; 	// The position the player is eligible to play for, according to FanDuel
-	private PlayerHistory history; 		// The performance of the player in previous games
+	private String name; // The name of the player
+	private int salary; // The salary (cost) of the player for a given game. Set by FanDuel
+	private PlayerPosition position; // The position the player is eligible to play for, according to FanDuel
+	private PlayerHistory history; // The performance of the player in previous games
 
 	// Constructor
 	Player(int salary, PlayerPosition position, PlayerHistory history) {
@@ -19,6 +20,15 @@ public class Player {
 	}
 
 	// Methods
+	/**
+	 * Getter for name.
+	 * 
+	 * @return The player's name.
+	 */
+	public String getName() {
+		return name;
+	}
+
 	/**
 	 * Getter for salary.
 	 * 
