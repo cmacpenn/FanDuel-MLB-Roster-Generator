@@ -71,6 +71,15 @@ public class RosterGenerator {
 	 *         otherwise.
 	 */
 	private boolean isRosterUnderSalaryCap(Roster roster) {
+		int totalSalary = 0;
+		for (Player player : roster){
+			totalSalary += player.salary;
+		}
+		if (totalSalary <= 35000){
+			return true;
+		} else {
+			return false;
+		}
 		// TODO
 	}
 
