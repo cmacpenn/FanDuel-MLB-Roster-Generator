@@ -75,7 +75,7 @@ public class RosterGenerator {
 		for (Player player : roster){
 			totalSalary += player.salary;
 		}
-		if (totalSalary <= 35000){
+		if (totalSalary <= SALARYCAP){
 			return true;
 		} else {
 			return false;
