@@ -13,7 +13,8 @@ public class Player {
 	private PlayerHistory history; // The performance of the player in previous games
 
 	// Constructor
-	Player(int salary, PlayerPosition position, PlayerHistory history) {
+	Player(String name, int salary, PlayerPosition position, PlayerHistory history) {
+		this.name = name;
 		this.salary = salary;
 		this.position = position;
 		this.history = history;
