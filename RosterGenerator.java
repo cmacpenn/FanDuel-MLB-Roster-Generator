@@ -73,7 +73,7 @@ public class RosterGenerator {
 	private boolean isRosterUnderSalaryCap(Roster roster) {
 		int totalSalary = 0;
 		for (Player player : roster){
-			totalSalary += player.salary;
+			totalSalary += player.getSalary();
 		}
 		if (totalSalary <= SALARYCAP){
 			return true;
