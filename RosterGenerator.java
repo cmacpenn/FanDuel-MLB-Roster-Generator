@@ -70,7 +70,8 @@ public class RosterGenerator {
 	 * @return True, if the roster has a combined salary under the SALARYCAP. False
 	 *         otherwise.
 	 */
-	private boolean isRosterUnderSalaryCap(Roster roster) {
+	//TODO Revert to private non-static when tests are done.  Temporary fix for testing deliverable.
+	public static boolean isRosterUnderSalaryCap(Roster roster) {
 		int totalSalary = 0;
 		for (Player player : roster){
 			totalSalary += player.getSalary();
