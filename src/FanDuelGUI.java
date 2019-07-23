@@ -1,24 +1,82 @@
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import java.awt.*;
+import javax.swing.*;
 
-/**
- * The GUI for the FanDuel suggestion program
- * 
- * @author Colin McLaughlin & Kenton Van
- *
- */
-public class FanDuelGUI {
 
-	// Variables
-	private JFrame window; // The main window/frame
-	private JButton uploadPlayerFile; // Uploads the player file from FanDuel to the program.
+public class FanDuelGUI implements Runnable {
+	
+	    private JFrame frame;
+	    private JButton uploadData;
+	    private JButton uploadPlayerFile;
+	    private JTextField rosterDisplay;
+	    private JTextField display;
 
-	// Constructor
-	public FanDuelGUI() {
-		// TODO Initialize GUI
-	}
+	    public JTextField getrosterDisplay() {
+	        return rosterDisplay;
+	    }
 
-	// Methods
-	// TODO
+	    public JTextField getdisplay() {
+	        return display;
+	    }
 
+	    public JButton getuploadData() {
+	        return uploadData;
+	    }
+
+	    
+
+	    public String toString(JTextField JTextField) {
+	        return JTextField.getText();
+	    }
+
+	    @Override
+	    public void run() {
+	        this.frame = new JFrame("FanFuel Roster Recs");
+	        this.frame.setPreferredSize(new Dimension(600, 300));
+	        this.frame.setLayout(new GridLayout(3, 1));
+
+	        this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+	        createComponents(this.frame.getContentPane());
+
+	        this.frame.pack();
+	        this.frame.setVisible(true);
+	    }
+
+	    private void createComponents(Container container) {
+	        display = new JTextField("Welcome to the FanDuel Fantasy Baseball Recommender");
+	        display.setEnabled(false);
+
+	        rosterDisplay = new JTextField("");
+	        rosterDisplay.setEnabled(false);
+
+	        container.add(display);
+	        container.add(rosterDisplay);
+	        container.add(createPanel(display, rosterDisplay), BorderLayout.SOUTH);
+	    }
+
+	    private JPanel createPanel(JTextField display, JTextField rosterDisplay) {
+	        JPanel panel = new JPanel(new GridLayout(1, 3));
+
+	        uploadData = new JButton("Upload Data");
+	        
+
+	        uploadPlayerFile = new JButton("Upload File");
+	        
+
+	        JButton generateRoster = new JButton("Generate");
+	        
+
+	        panel.add(uploadPlayerFile);
+	        panel.add(generateRoster);
+	        panel.add(uploadData);
+
+	        return panel;
+	    }
+
+	    public JFrame getFrame() {
+	        return frame;
+	    }
+
+
+	
 }
