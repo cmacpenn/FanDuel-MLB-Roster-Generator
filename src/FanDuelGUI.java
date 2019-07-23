@@ -1,6 +1,13 @@
+
+/**
+ * Main GUI user interface for uploading the day's player data,
+ * getting a visual roster recommedation, and uploading new data.
+ * @author Colin McLaughlin & Kenton Van
+ *
+ */
+
 import java.awt.*;
 import javax.swing.*;
-
 
 public class FanDuelGUI implements Runnable {
 	
@@ -53,7 +60,7 @@ public class FanDuelGUI implements Runnable {
 	        container.add(rosterDisplay);
 	        container.add(createPanel(display, rosterDisplay), BorderLayout.SOUTH);
 	    }
-
+		//TO DO makem Listener class for buttons
 	    private JPanel createPanel(JTextField display, JTextField rosterDisplay) {
 	        JPanel panel = new JPanel(new GridLayout(1, 3));
 
