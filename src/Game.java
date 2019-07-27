@@ -9,7 +9,7 @@ import java.util.Date;
 public class Game {
 
 	// Variables - batters
-	private Date date; // The day the game was played
+	private Date date; // The day the game was played TODO Date class
 	private int singles; // The number of singles the player batted
 	private int doubles; // The number of doubles the player batted
 	private int triples; // The number of triples the player batted
