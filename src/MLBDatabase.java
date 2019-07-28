@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.File;
@@ -54,7 +56,7 @@ public class MLBDatabase {
 		String playerImportStatement = "INSERT INTO PLAYERS(FANDUELID, NAME) SELECT FANDUELID, NAME FROM T";
 		String batterImportStatement = "INSERT INTO BATTER_GAME_LOG (FANDUELID, GAME_DATE, SINGLES, DOUBLES, TRIPLES, HOME_RUNS, RUNS, RUNS_BATTED_IN, WALKS, HIT_BY_PITCH, STOLEN_BASE) SELECT ID, PARSEDATETIME(GAMEDATE, 'yyyy-MM-dd'), X1B, X2B, X3B, HR, R, RBI, BB, HBP, SB FROM T";
 		String pitcherImportStatement = "INSERT INTO PITCHER_GAME_LOG (FANDUELID, GAME_DATE, WIN, QUALITY_START, STRIKE_OUTS, EARNED_RUNS, INNINGS_PITCHED) SELECT FANDUELID, PARSEDATETIME(GAMEDATE, 'yyyy-MM-dd'), W, QS, SO, ER, IP FROM T";
-		
+
 		loadDataIntoDatabase(rawPlayerData, playerImportStatement);
 		loadDataIntoDatabase(rawBatterGameData, batterImportStatement);
 		loadDataIntoDatabase(rawPitcherGameData, pitcherImportStatement);
@@ -64,44 +66,106 @@ public class MLBDatabase {
 	/**
 	 * Reads in the csv data and populates the database.
 	 * 
-	 * @param rawPlayerData The csv file with the raw game data.
-	 * @param importStatement The SQL string to insert the data from a temporary table created by csvread
+	 * @param rawPlayerData   The csv file with the raw game data.
+	 * @param importStatement The SQL string to insert the data from a temporary
+	 *                        table created by csvread
 	 * @throws SQLException
 	 * @throws IOException
 	 */
 	private void loadDataIntoDatabase(File rawPlayerData, String importStatement) throws SQLException, IOException {
-		String createTempStatement = "CREATE TEMPORARY TABLE T AS SELECT * FROM CSVREAD('" + rawPlayerData.getAbsolutePath() + "')";
+		String createTempStatement = "CREATE TEMPORARY TABLE T AS SELECT * FROM CSVREAD('"
+				+ rawPlayerData.getAbsolutePath() + "')";
 		String dropTempStatement = "DROP TABLE T";
 		Statement stm = connection.createStatement();
-		stm.execute(createTempStatement);	
+		stm.execute(createTempStatement);
 		stm.execute(importStatement);
 		stm.execute(dropTempStatement);
 	}
 
 	/**
-	 * Returns the MLB game history from the database for a given player.
+	 * Returns the MLB game history from the database for a given player as a
+	 * PlayerHistory object. If a player is a pitcher for the current game, then
+	 * only pitching records are returned. Otherwise, only batting records are
+	 * returned.
 	 * 
-	 * @param id The FanDuel ID of the player whose MLB game history we want to retrieve.
+	 * @param id       The FanDuel ID of the player whose MLB game history we want
+	 *                 to retrieve.
+	 * @param position The player's position.
 	 * @return The player's game history.
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
-	public PlayerHistory pullPlayerHistory(int id) throws SQLException {
+	public PlayerHistory pullPlayerHistory(int id, PlayerPosition position) throws SQLException {
+		ResultSet results = pullGamesFromDatabase(id, position);
+		PlayerHistory history = parseGames(results, position);
+
+		return history;
+	}
+
+	/**
+	 * Queries the database for a given player. If a player is a pitcher for the
+	 * current game, then only pitching records are returned. Otherwise, only
+	 * batting records are returned.
+	 * 
+	 * @param id       The FanDuel ID of the player whose MLB game history we want
+	 *                 to retrieve.
+	 * @param position The player's position.
+	 * @return The player's game history.
+	 * @throws SQLException
+	 */
+	private ResultSet pullGamesFromDatabase(int id, PlayerPosition position) throws SQLException {
 		// Pull all games from games table
 		Statement stm = connection.createStatement();
-		String batterQuery = "SELECT * FROM BATTER_GAME_LOG WHERE FANDUELID = " + id;
-		String pitcherQuery = "SELECT * FROM PITCHER_GAME_LOG WHERE FANDUELID = " + id;
-		ResultSet batterResults = stm.executeQuery(batterQuery);
-		ResultSet pitcherResults = stm.executeQuery(pitcherQuery);
+		String table = (position == PlayerPosition.PITCHER) ? "PITCHER_GAME_LOG" : "BATTER_GAME_LOG";
+		String gameQuery = "SELECT * FROM " + table + " WHERE FANDUELID = " + id;
+		ResultSet results = stm.executeQuery(gameQuery);
+
+		return results;
+	}
+
+	/**
+	 * Converts the raw game data from the database into a PlayerHistory object.
+	 * 
+	 * @param results  The result set with pitching game results.
+	 * @param position The player's position this game
+	 * @return A PlayerHistory object with the player's game data
+	 * @throws SQLException
+	 */
+	private PlayerHistory parseGames(ResultSet results, PlayerPosition position) throws SQLException {
+		ArrayList<Game> games = new ArrayList<Game>();
+		while (results.next()) {
+			Game game;
+			Date gameDate = results.getDate("GAME_DATE");
+			if (position == PlayerPosition.PITCHER) {
+				boolean win = results.getBoolean("WIN");
+				boolean qualityStart = results.getBoolean("QUALITY_START");
+				int strikeOuts = results.getInt("STRIKE_OUTS");
+				int earnedRuns = results.getInt("EARNED_RUNS");
+				double inningsPitched = results.getDouble("INNINGS_PITCHED");
+				game = new PitchingGame(gameDate, win, qualityStart, earnedRuns, strikeOuts, inningsPitched);
+			} else {
+				int singles = results.getInt("SINGLES");
+				int doubles = results.getInt("DOUBLES");
+				int triples = results.getInt("TRIPLES");
+				int homeRuns = results.getInt("HOME_RUNS");
+				int runs = results.getInt("RUNS");
+				int runsBattedIn = results.getInt("RUNS_BATTED_IN");
+				int walks = results.getInt("WALKS");
+				int hitByPitches = results.getInt("HIT_BY_PITCH");
+				int stolenBases = results.getInt("STOLEN_BASE");
+				game = new BattingGame(gameDate, singles, doubles, triples, homeRuns, runsBattedIn, runs, walks,stolenBases, hitByPitches);
+			}
+			games.add(game);
+		}
+		PlayerHistory history = new PlayerHistory(games);
 		
-		// Convert results into PlayerHistory object and return
-		while(batterResults.next()) {
-! So, problem here.  Create Game as an interface, and then do PitcherGame and BatterGame
-! This will implement a higher concept, and otherwise we have the problem of double headers,
-! where we have multiple games on the same day - how to match pitcher/batter stats?
-		}
-		while(pitcherResults.next()) {
-			
-		}
+		return history;
+	}
+
+	/**
+	 * @return The url for the database.
+	 */
+	public String getUrl() {
+		return url;
 	}
 
 	/**
