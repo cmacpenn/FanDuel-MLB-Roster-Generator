@@ -19,7 +19,7 @@ public class BattingGame implements Game {
 	private int walks; // The number of walks a player received. (AKA base on balls).
 	private int stolenBases; // The number of stolen bases
 	private int hitByPitches; // The number of times the player was hit by a pitch
-	double fantasyPoints; // The number of fantasy points earned during the game
+	private double fantasyPoints; // The number of fantasy points earned during the game
 
 	// Constructor
 	/**
