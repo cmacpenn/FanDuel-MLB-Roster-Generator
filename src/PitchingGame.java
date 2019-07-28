@@ -14,11 +14,11 @@ public class PitchingGame implements Game {
 	private boolean qualityStart; // Pitches at least six innings and has 3 earned runs or fewer
 	private int earnedRuns; // Number of runs scored without the aid of an error or passed ball
 	private int strikeOuts; // Number of batters the pitcher struck out
-	private int inningsPitched; // The number of innings the pitcher pitched
-	double fantasyPoints; // The number of fantasy points earned during the game
+	private double inningsPitched; // The number of innings the pitcher pitched
+	private double fantasyPoints; // The number of fantasy points earned during the game
 
 	// Constructor
-	PitchingGame(Date date, boolean win, boolean qualityStart, int earnedRuns, int strikeOuts, int inningsPitched) {
+	PitchingGame(Date date, boolean win, boolean qualityStart, int earnedRuns, int strikeOuts, double inningsPitched) {
 		this.date = date;
 		this.win = win;
 		this.qualityStart = qualityStart;
@@ -86,10 +86,10 @@ public class PitchingGame implements Game {
 	/**
 	 * @return the inningsPitched
 	 */
-	public int getInningsPitched() {
+	public double getInningsPitched() {
 		return inningsPitched;
 	}
-	
+
 	/**
 	 * @return the fantasy points
 	 */
