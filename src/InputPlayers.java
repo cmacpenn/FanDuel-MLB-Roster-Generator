@@ -70,7 +70,7 @@ public class InputPlayers {
 		Scanner in = new Scanner(input);
 		ArrayList<String[]> inputArray = new ArrayList<String[]>();
 		while (in.hasNextLine()) {
-			inputArray.add(in.nextLine().split(","));
+			inputArray.add(in.nextLine().replaceAll("\"", "").split(","));
 		}
 
 		// Check that we have the required columns
