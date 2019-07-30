@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class PlayerHistory {
 
 	// Variables
-	//TODO change from game class to pitcher/batter
+	
 	private ArrayList<Game> games; // Holds the MLB games the player has played
 
 	// Constructor
