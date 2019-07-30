@@ -3,7 +3,7 @@ import java.util.Iterator;
 
 /**
  * Holds 9 MLB players with 1 pitcher, 1 center/1st base, 1 2nd base, 1 3rd
- * base, 1 short stop, 3 out fielders, and 1 utility
+ * base, 1 short stop, 3 out fielders, and 1 non-pitcher
  * 
  * @author Colin McLaughlin & Kenton Van
  *
