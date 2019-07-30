@@ -13,7 +13,7 @@ public class PlayerHistory {
 	private double averageFantasyPointsPerGame; // Average fantasy points across all games
 	private double minimumFantasyPointsPerGame; // Minimum fantasy points across all games
 	private double maximumFantasyPointsPerGame; // Maximum fantasy points across all games
-	
+
 	// Constructor
 	/**
 	 * Constructor for PlayerHistory
@@ -27,48 +27,55 @@ public class PlayerHistory {
 		maximumFantasyPointsPerGame = calculateMaximumFantasyPoints();
 	}
 
-	
 	// Methods
 	/**
 	 * Calculates the average fantasy points earned per game.
+	 * 
 	 * @return The average fantasy points earned per game.
 	 */
 	private double calculateAverageFantasyPoints() {
 		double sum = 0.0;
-		for(Game game : games) {
+		for (Game game : games) {
 			sum += game.getFantasyPoints();
 		}
 		return sum / games.size();
 	}
-	
+
 	/**
 	 * Calculates the minimum fantasy points earned per game.
+	 * 
 	 * @return The minimum fantasy points earned per game.
 	 */
 	private double calculateMinimumFantasyPoints() {
-		double min = games.get(0).getFantasyPoints();
-		for(Game game : games) {
-			if(min > game.getFantasyPoints()) {
+		// Checking to make sure that we've played at least one game so it doesn't error
+		// If they haven't played any games, then assign it a zero (they're going to get dropped anyway)
+		double min = 0;
+		if (games.size() >= 1) {
+			min = games.get(0).getFantasyPoints();
+		}
+		for (Game game : games) {
+			if (min > game.getFantasyPoints()) {
 				min = game.getFantasyPoints();
 			}
 		}
 		return min;
 	}
-	
+
 	/**
 	 * Calculates the maximum fantasy points earned per game.
+	 * 
 	 * @return The maximum fantasy points earned per game.
 	 */
 	private double calculateMaximumFantasyPoints() {
 		double max = 0.0;
-		for(Game game : games) {
-			if(max < game.getFantasyPoints()) {
+		for (Game game : games) {
+			if (max < game.getFantasyPoints()) {
 				max = game.getFantasyPoints();
 			}
 		}
 		return max;
 	}
-	
+
 	/**
 	 * Getter for games
 	 * 
@@ -77,7 +84,7 @@ public class PlayerHistory {
 	public ArrayList<Game> getGames() {
 		return this.games;
 	}
-	
+
 	/**
 	 * @return the averageFantasyPointsPerGame
 	 */
