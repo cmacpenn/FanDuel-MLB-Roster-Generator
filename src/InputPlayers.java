@@ -13,8 +13,8 @@ import java.util.Scanner;
 public class InputPlayers {
 
 	// Variables
-	File input; // The input file from FanDuel
-	ArrayList<Player> players; // The list of eligible players.
+	private File input; // The input file from FanDuel
+	private ArrayList<Player> players; // The list of eligible players.
 
 	// Constructor
 	/**
