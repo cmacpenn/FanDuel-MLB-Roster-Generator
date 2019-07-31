@@ -36,6 +36,9 @@ public class RosterGenerator {
 		// TODO Use an algorithm to assign the number of fantasy points likely to be
 		// earned. Rank the rosters and return the one with the hightest fantasy points
 		// - rankRosters()
+		ArrayList<Roster> manyRosters = this.generateMultipleRandomRosters(100);
+		Roster recommendedRoster = this.rankRosters(manyRosters);
+		return recommendedRoster;
 	}
 
 	/**
