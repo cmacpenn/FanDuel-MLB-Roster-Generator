@@ -140,6 +140,9 @@ public class RosterGenerator {
 	private Roster rankRosters(ArrayList<Roster> rosters) {
 		// TODO Calculate fantasy points - calculateLikelyFantasyPoints()
 		// TODO Rank rosters
+		ArrayList<Roster> sortedRoster = rosters;
+		Collections.sort(sortedRoster);
+		return sortedRoster.get(0);
 	}
 
 	/**
