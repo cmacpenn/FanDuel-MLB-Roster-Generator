@@ -52,7 +52,14 @@ public class Roster implements Iterable<Player>, Comparable<Roster>{
 		return playerIterator;
 	}
 	
-	
+	@Override
+    public String toString() {
+        int count = 1;
+		for (Player p : players){
+        	System.out.println(count + ". " + p.getName() + " " + p.getPosition());
+        }
+		return "";
+    }
 	
 	@Override
     public int compareTo(Roster roster) {
