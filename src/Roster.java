@@ -3,15 +3,16 @@ import java.util.Iterator;
 
 /**
  * Holds 9 MLB players with 1 pitcher, 1 center/1st base, 1 2nd base, 1 3rd
- * base, 1 short stop, 3 out fielders, and 1 non-pitcher
+ * base, 1 short stop, 3 out fielders, and 1 utility
  * 
  * @author Colin McLaughlin & Kenton Van
  *
  */
-public class Roster implements Iterable<Player> {
+public class Roster implements Iterable<Player>, Comparable<Roster>{
 
 	// Variables
 	private ArrayList<Player> players;
+	private double fantasyPoints;
 
 	// Constructor
 	/**
@@ -23,6 +24,23 @@ public class Roster implements Iterable<Player> {
 		// TODO Check that we have 9 players
 		// TODO Check that we have the right types of players
 		this.players = players;
+		fantasyPoints = this.calculateLikelyFantasyPoints();
+	}
+	
+	private double calculateLikelyFantasyPoints() {
+		double totalFantasyPoints = 0.0;
+		for (Player p : this.players) {
+			totalFantasyPoints += p.getHistory().getAverageFantasyPointsPerGame();
+		}
+		return totalFantasyPoints;
+		
+		// TODO Implement algorithm
+	}
+	
+	
+
+	public double getFantasyPoints() {
+		return fantasyPoints;
 	}
 
 	@Override
@@ -33,6 +51,21 @@ public class Roster implements Iterable<Player> {
 		Iterator<Player> playerIterator = players.iterator();
 		return playerIterator;
 	}
+	
+	
+	//need to finish. double error
+	@Override
+    public double compareTo(Roster roster) {
+       if(this.fantasyPoints > roster.getFantasyPoints()) {
+    	   return -1;
+       } else if (this.fantasyPoints == roster.getFantasyPoints()) {
+    	   return 0;
+       }
+       else {
+    	   return 1;
+       }
+        
+    }
 
 	// Methods
 
