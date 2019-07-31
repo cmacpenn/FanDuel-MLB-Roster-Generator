@@ -13,21 +13,18 @@ import javax.swing.SwingUtilities;
 public class FanDuelRunner {
 
 	public static void main(String[] args) {
-		// Open the GUI
-		SwingUtilities.invokeLater(new FanDuelGUI());
 		
-		// Load the database
-		// Does this need to go inside the GUI somehow?
 		String url = "jdbc:h2:mem:";
 		File rawBatterGameData = new File("database/database_batting_game_logs_after_2015.csv");
 		File rawPitcherGameData = new File("database/database_pitching_game_logs_after_2015.csv");
 		File rawPlayerData = new File("database/database_players.csv");
-		try {
-			MLBDatabase mlbDb = new MLBDatabase(url, rawBatterGameData, rawPitcherGameData, rawPlayerData);
-		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		// Open the GUI
+		new FanDuelGUI(url, rawBatterGameData, rawPitcherGameData, rawPlayerData);
+		
+		// Load the database
+		// Does this need to go inside the GUI somehow?
+	
 		
 		
 		
