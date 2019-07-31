@@ -55,7 +55,7 @@ public class Roster implements Iterable<Player>, Comparable<Roster>{
 	
 	//need to finish. double error
 	@Override
-    public double compareTo(Roster roster) {
+    public int compareTo(Roster roster) {
        if(this.fantasyPoints > roster.getFantasyPoints()) {
     	   return -1;
        } else if (this.fantasyPoints == roster.getFantasyPoints()) {
