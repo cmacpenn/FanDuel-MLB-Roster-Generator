@@ -48,7 +48,8 @@ public class PlayerHistory {
 	 */
 	private double calculateMinimumFantasyPoints() {
 		// Checking to make sure that we've played at least one game so it doesn't error
-		// If they haven't played any games, then assign it a zero (they're going to get dropped anyway)
+		// If they haven't played any games, then assign it a zero (they're going to get
+		// dropped anyway)
 		double min = 0;
 		if (games.size() >= 1) {
 			min = games.get(0).getFantasyPoints();
