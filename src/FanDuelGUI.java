@@ -12,12 +12,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class FanDuelGUI {
 
 	// Variables
+	private MLBDatabase mlbDB; // The database
 	private JFrame frame; // Main frame
 	private JLabel display; // The main text at the top of the screen.
 	private JTextArea rosterDisplay; // Field that will display the suggested roster.
@@ -25,7 +27,9 @@ public class FanDuelGUI {
 	private JButton generateRosterButton; // Button that will run the algorithm to identify a roster.
 	private final JFileChooser fc = new JFileChooser(); // Dialog box to choose the player input file.
 	private File playerFile; // The file with FanDuel player information.
-	
+	private InputPlayers inputPlayers; // The parsed data from playerFile.
+	private Roster suggestedRoster; // The roster of players that is suggested by the algorithm.
+
 	// Constructor
 	/**
 	 * Constructor for FanDuelGUI
@@ -39,7 +43,7 @@ public class FanDuelGUI {
 		createGUI();
 		try {
 			rosterDisplay.setText("Please wait while the database loads.");
-			MLBDatabase mlbDB = new MLBDatabase(url, rawBatterGameData, rawPitcherGameData, rawPlayerData);
+			mlbDB = new MLBDatabase(url, rawBatterGameData, rawPitcherGameData, rawPlayerData);
 			rosterDisplay.setText("The database has finished loading.  You may now upload a player file.");
 			uploadPlayerFileButton.setEnabled(true);
 		} catch (SQLException | IOException e) {
@@ -102,9 +106,10 @@ public class FanDuelGUI {
 		public void actionPerformed(ActionEvent e) {
 			int returnVal = fc.showOpenDialog(frame);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-	            playerFile = fc.getSelectedFile();
-	            generateRosterButton.setEnabled(true);
-	            rosterDisplay.setText("You have chosen to upload the following file: " + playerFile.getName() + ".\n\nPlease click the 'Generate Roster' button to create a FanDuel linup, or 'Upload Player File' to select a different file.");
+				playerFile = fc.getSelectedFile();
+				generateRosterButton.setEnabled(true);
+				rosterDisplay.setText("You have chosen to upload the following file: " + playerFile.getName()
+						+ ".\n\nPlease click the 'Generate Roster' button to create a FanDuel linup, or 'Upload Player File' to select a different file.");
 			}
 		}
 
@@ -114,7 +119,16 @@ public class FanDuelGUI {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			rosterDisplay.setText(
+					"Running the algorithm to generate a roster likely to earn a high number of fantasy points.");
+			try {
+				inputPlayers = new InputPlayers(playerFile, mlbDB);
+				suggestedRoster = new RosterGenerator(inputPlayers.getPlayers()).getRosterSuggestion();
+			} catch (FileNotFoundException | IllegalArgumentException | FileFormatException | SQLException e1) {
+				rosterDisplay.setText(
+						"The program has encountered an error calculating the roster.\nPlease correct the error and relaunch the program.\nError: "
+								+ e1.getMessage());
+			}
 
 		}
 
