@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+import java.util.*;
+import java.util.Random;
 
 /**
  * Given a set of players, generates a suggested roster for FanDuel competitions
@@ -12,7 +13,7 @@ public class RosterGenerator {
 	// Variables
 	private ArrayList<Player> players; // The list of MLB players to choose from
 	private static final int SALARYCAP = 35000; // The salary cap for a team, in dollars
-
+	
 	// Constructor
 	/**
 	 * Constructor for RosterGenerator
@@ -40,7 +41,7 @@ public class RosterGenerator {
 	/**
 	 * Generates n random rosters that meet the following criteria:
 	 * 
-	 * 1. Must have 1 each of pitcher, C/1B, 2B, 3B, SS, and UTIL. Must have 3 OF.
+	 * 1. Must have 1 each of pitcher, C/1B, 2B, 3B, SS, and WILD. Must have 3 OF.
 	 * 
 	 * 2. Total salary for the roster must not exceed SALARYCAP
 	 * 
@@ -51,6 +52,16 @@ public class RosterGenerator {
 		// TODO Create the roster with the correct positions - chooseRandomRoster()
 		// TODO Verify that the roster is under the salary cap -
 		// isRosterUnderSalaryCap()
+		ArrayList<Roster> rosters = new ArrayList<Roster>();
+		int count = 0;
+		while (count < n) {
+			Roster r = this.chooseRandomRoster();
+			if (this.isRosterUnderSalaryCap(r)) {
+				rosters.add(r);
+				count++;
+			}
+		}
+		return rosters;
 	}
 
 	/**
@@ -60,7 +71,42 @@ public class RosterGenerator {
 	 * @return A roster with a random selection of players.
 	 */
 	private Roster chooseRandomRoster() {
-
+		ArrayList<Player> pitchers = this.generatePositionArray("PITCHER");
+		ArrayList<Player> catcherOrFirsts = this.generatePositionArray("CATCHERORFIRSTBASE");
+		ArrayList<Player> seconds = this.generatePositionArray("SECONDBASE");
+		ArrayList<Player> thirds = this.generatePositionArray("THIRDBASE");
+		ArrayList<Player> shorts = this.generatePositionArray("SHORTSTOP");
+		ArrayList<Player> outfields = this.generatePositionArray("OUTFIELD");
+		ArrayList<Player> team = new ArrayList<Player>();
+		ArrayList<Player> teamNoWild = new ArrayList<Player>();
+		Player pitcher = this.getRandomPlayer(pitchers);
+		Player catcherOrFirst = this.getRandomPlayer(catcherOrFirsts);
+		Player second = this.getRandomPlayer(seconds);
+		Player third = this.getRandomPlayer(thirds);
+		Player shortstop = this.getRandomPlayer(shorts);
+		Player[] outfielders = this.getRandomPlayers(outfields);
+		Player outfield1 = outfielders[0];
+		Player outfield2 = outfielders[1];
+		Player outfield3 = outfielders[3];
+		teamNoWild.add(outfield3);
+		teamNoWild.add(outfield2);
+		teamNoWild.add(outfield1);
+		teamNoWild.add(shortstop);
+		teamNoWild.add(third);
+		teamNoWild.add(second);
+		teamNoWild.add(catcherOrFirst);
+		Player wild = this.getRandomWild(teamNoWild);
+		team = teamNoWild;
+		team.add(pitcher);
+		team.add(wild);
+		
+		Roster roster = new Roster(team);
+		return roster;
+		
+		
+		
+		
+		
 	}
 
 	/**
@@ -103,9 +149,86 @@ public class RosterGenerator {
 	 * @param roster The roster of players to evaluate.
 	 * @return The number of forecasted fantasy points the roster will earn.
 	 */
+	
+	//Add to roster class
+	/*
 	private double calculateLikelyFantasyPoints(Roster roster) {
+		double totalFantasyPoints = 0.0;
+		for (Player p : roster) {
+			totalFantasyPoints += p.getHistory().getAverageFantasyPointsPerGame();
+		}
+		return totalFantasyPoints;
+		
 		// TODO Implement algorithm
 	}
+	*/
+	/**
+	 * Get a random player
+	 * @param list
+	 * @return
+	 */
+	private Player getRandomPlayer(ArrayList<Player> list) {
+		Random rand = new Random(); 
+		return list.get(rand.nextInt(list.size()));
+	}
+	
+	/**
+	 * Return 3 outfielders that are not duplicates
+	 * @param list
+	 * @return
+	 */
+	private Player[] getRandomPlayers(ArrayList<Player> list) {
+		List<Player> outfields = new ArrayList<Player>();
+		for (Player i : list) {
+			outfields.add(i);
+		}
+		Collections.shuffle(list);
+		Player[] nonDublicate = new Player[3];
+		for (int j = 0; j < 3; j++) {
+			nonDublicate[j] = outfields.get(j);
+		}
+		return nonDublicate;
+	}
+	/**
+	 * Return a random player of ones not already used.
+	 * @param list
+	 * @return
+	 */
+	private Player getRandomWild(ArrayList<Player> list) {
+		ArrayList<Player> allPlayers = players;
+		Iterator<Player> iterator = allPlayers.iterator();
+		String pitch = "PITCHER";
+		while (iterator.hasNext()) {
+			if(pitch.contentEquals(iterator.next().getPosition().name())) {
+				iterator.remove();
+			}
+			
+		}
+		while (iterator.hasNext()) {
+			for (Player p : list) {
+				if (p.getName().equalsIgnoreCase(iterator.next().getName())){
+					iterator.remove();
+				}
+			}
+		}
+		Player wild = this.getRandomPlayer(allPlayers);
+		return wild;
+	}
+	/**
+	 * Return an array of specific positions
+	 * @param position
+	 * @return
+	 */
+	private ArrayList<Player> generatePositionArray(String position){
+		ArrayList<Player> generate = new ArrayList<Player>();
+		for (Player player : this.players) {
+			if (position.contentEquals(player.getPosition().name())) {
+				generate.add(player);
+				
+			}		
+		} return generate;
+	}
+	
 
 }
 
