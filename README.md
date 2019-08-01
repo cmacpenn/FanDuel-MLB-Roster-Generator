@@ -4,6 +4,8 @@ Fantasy baseball is a contest in which entrants create a team lineup from the li
 This program suggests a roster of players likely to score well for a given day.  Users will download the players list for the day from FanDuel and upload it to the program.  The players list contains the list of players for the day, as well as their FanDuel-assigned salaries.  The program will then use historical data to suggest a player lineup that is likely to score well.
 
 ## Getting Started
+
+### Downloading FanDuel player files
 The GitHub repository has several historical player lists from FanDuel in the input folder, but you can download the newest versions from FanDuel.  The following steps will guide you through downloading the file.
 1. Create a free FanDuel account at www.fanduel.com
 
@@ -18,6 +20,9 @@ The GitHub repository has several historical player lists from FanDuel in the in
 
 5. Download the player list
 <img src="./images/FanDuel Download Player List.png" width="1000">
+
+### Adding the H2 database library
+This program depends on the Java H2 database library.  The H2 JAR file is located at library/h2-1.4.199.jar.  You will need to add this to your build path in order for the program to work.
 
 ## Authors
 
