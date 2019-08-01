@@ -55,11 +55,13 @@ public class Roster implements Iterable<Player>, Comparable<Roster>{
 	@Override
     public String toString() {
         int count = 1;
-		for (Player p : players){
-        	System.out.println(count + ". " + p.getName() + " " + p.getPosition());
-		count++;
+		System.out.printf("%-10s%-30s%s%n", "   Player", "Position", "Salary");
+        for (Player p : players){
+        	System.out.printf("%-10s%-30s%s%n", count + ". " + p.getName(), p.getPosition(),
+        			p.getSalary());
+        	count++;
         }
-		return "";
+		return "Estimated Fantasy Points: " + Double.toString(fantasyPoints);
     }
 	
 	@Override
