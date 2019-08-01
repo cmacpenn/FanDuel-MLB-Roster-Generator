@@ -53,7 +53,7 @@ public class RosterGenerator {
 			Roster emptyRoster = new Roster(noPlayer);
 			return emptyRoster;
 		} else {
-		ArrayList<Roster> manyRosters = this.generateMultipleRandomRosters(1);
+		ArrayList<Roster> manyRosters = this.generateMultipleRandomRosters(100);
 		Roster recommendedRoster = this.rankRosters(manyRosters);
 		return recommendedRoster;
 		}
