@@ -207,18 +207,14 @@ public class RosterGenerator {
 		while (iterator.hasNext()) {
 			if(pitch.contentEquals(iterator.next().getPosition().name())) {
 				iterator.remove();
-			}
+			} 
 			
 		}
-		while (iterator.hasNext()) {
-			for (Player p : list) {
-				if (p.getName().equalsIgnoreCase(iterator.next().getName())){
-					iterator.remove();
-				}
-			}
-		}
+		allPlayers.removeAll(list);
+		
 		Player wild = this.getRandomPlayer(allPlayers);
 		return wild;
+	}
 	}
 	/**
 	 * Return an array of specific positions
