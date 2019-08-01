@@ -13,6 +13,12 @@ public class RosterGenerator {
 	// Variables
 	private ArrayList<Player> players; // The list of MLB players to choose from
 	private static final int SALARYCAP = 35000; // The salary cap for a team, in dollars
+	private ArrayList<Player> pitchers; 
+	private ArrayList<Player> catcherOrFirsts; 
+	private ArrayList<Player> seconds;
+	private ArrayList<Player> thirds;
+	private ArrayList<Player> shorts;
+	private ArrayList<Player> outfields;
 	
 	// Constructor
 	/**
@@ -22,6 +28,12 @@ public class RosterGenerator {
 	 */
 	public RosterGenerator(ArrayList<Player> players) {
 		this.players = players;
+		this.pitchers = this.generatePositionArray("PITCHER");
+		this.catcherOrFirsts = this.generatePositionArray("CATCHERORFIRSTBASE");
+		this.seconds = this.generatePositionArray("SECONDBASE");
+		this.thirds = this.generatePositionArray("THIRDBASE");
+		this.shorts = this.generatePositionArray("SHORTSTOP");
+		this.outfields = this.generatePositionArray("OUTFIELD");
 	}
 
 	// Methods
@@ -74,12 +86,6 @@ public class RosterGenerator {
 	 * @return A roster with a random selection of players.
 	 */
 	private Roster chooseRandomRoster() {
-		ArrayList<Player> pitchers = this.generatePositionArray("PITCHER");
-		ArrayList<Player> catcherOrFirsts = this.generatePositionArray("CATCHERORFIRSTBASE");
-		ArrayList<Player> seconds = this.generatePositionArray("SECONDBASE");
-		ArrayList<Player> thirds = this.generatePositionArray("THIRDBASE");
-		ArrayList<Player> shorts = this.generatePositionArray("SHORTSTOP");
-		ArrayList<Player> outfields = this.generatePositionArray("OUTFIELD");
 		ArrayList<Player> team = new ArrayList<Player>();
 		ArrayList<Player> teamNoWild = new ArrayList<Player>();
 		Player pitcher = this.getRandomPlayer(pitchers);
