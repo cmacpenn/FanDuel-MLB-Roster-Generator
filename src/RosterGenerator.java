@@ -49,7 +49,6 @@ public class RosterGenerator {
 		// earned. Rank the rosters and return the one with the hightest fantasy points
 		// - rankRosters()
 		if (players.size() == 0) {
-			System.out.println("No players have been loaded.");
 			ArrayList<Player> noPlayer = new ArrayList<Player>();
 			Roster emptyRoster = new Roster(noPlayer);
 			return emptyRoster;
