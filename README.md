@@ -24,6 +24,19 @@ The GitHub repository has several historical player lists from FanDuel in the in
 ### Adding the H2 database library
 This program depends on the Java H2 database library.  The H2 JAR file is located at library/h2-1.4.199.jar.  You will need to add this to your build path in order for the program to work.
 
+## Running the program
+1. Run the main method from FanDuelGUI.java.  A window will appear.
+
+2. The screen will display a message that the database is loading.  Wait for the database to finish loading.  It will take around 30 seconds.
+<img src="./images/Recommender Welcome.png" width="500">
+
+3. Once the database has finished loading, the 'Upload Player File' button will be enabled.  Click on the button and navigate to the FanDuel player file you want to upload.
+<img src="./images/Recommender Upload.png" width="500">
+
+4. Once a file has been selected, the 'Generate Roster' button will be enabled.  Click on it to run the roster selection algorithm.
+
+5.  RESULTS GO HERE!!!!
+
 ## Authors
 
 * **Colin McLaughlin**
