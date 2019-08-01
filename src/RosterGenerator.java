@@ -48,7 +48,7 @@ public class RosterGenerator {
 		// TODO Use an algorithm to assign the number of fantasy points likely to be
 		// earned. Rank the rosters and return the one with the hightest fantasy points
 		// - rankRosters()
-		ArrayList<Roster> manyRosters = this.generateMultipleRandomRosters(100);
+		ArrayList<Roster> manyRosters = this.generateMultipleRandomRosters(400);
 		Roster recommendedRoster = this.rankRosters(manyRosters);
 		return recommendedRoster;
 	}
@@ -63,7 +63,7 @@ public class RosterGenerator {
 	 * @param n The number of random rosters to generate
 	 * @return
 	 */
-	private ArrayList<Roster> generateMultipleRandomRosters(int n) {
+	public ArrayList<Roster> generateMultipleRandomRosters(int n) {
 		// TODO Create the roster with the correct positions - chooseRandomRoster()
 		// TODO Verify that the roster is under the salary cap -
 		// isRosterUnderSalaryCap()
@@ -85,15 +85,15 @@ public class RosterGenerator {
 	 * 
 	 * @return A roster with a random selection of players.
 	 */
-	private Roster chooseRandomRoster() {
+	public Roster chooseRandomRoster() {
 		ArrayList<Player> team = new ArrayList<Player>();
 		ArrayList<Player> teamNoWild = new ArrayList<Player>();
-		Player pitcher = this.getRandomPlayer(pitchers);
-		Player catcherOrFirst = this.getRandomPlayer(catcherOrFirsts);
-		Player second = this.getRandomPlayer(seconds);
-		Player third = this.getRandomPlayer(thirds);
-		Player shortstop = this.getRandomPlayer(shorts);
-		Player[] outfielders = this.getRandomPlayers(outfields);
+		Player pitcher = this.getRandomPlayer(this.pitchers);
+		Player catcherOrFirst = this.getRandomPlayer(this.catcherOrFirsts);
+		Player second = this.getRandomPlayer(this.seconds);
+		Player third = this.getRandomPlayer(this.thirds);
+		Player shortstop = this.getRandomPlayer(this.shorts);
+		Player[] outfielders = this.getRandomPlayers(this.outfields);
 		Player outfield1 = outfielders[0];
 		Player outfield2 = outfielders[1];
 		Player outfield3 = outfielders[2];
@@ -110,7 +110,8 @@ public class RosterGenerator {
 		team.add(wild);
 		
 		Roster roster = new Roster(team);
-		return roster;
+		return roster;	
+		
 	}
 
 	/**
@@ -141,7 +142,7 @@ public class RosterGenerator {
 	 * @param rosters The array of rosters to choose from
 	 * @return The roster with the highest number of predicted fantasy points
 	 */
-	private Roster rankRosters(ArrayList<Roster> rosters) {
+	public Roster rankRosters(ArrayList<Roster> rosters) {
 		// TODO Calculate fantasy points - calculateLikelyFantasyPoints()
 		// TODO Rank rosters
 		ArrayList<Roster> sortedRoster = rosters;
@@ -175,8 +176,9 @@ public class RosterGenerator {
 	 * @return
 	 */
 	private Player getRandomPlayer(ArrayList<Player> list) {
-		Random rand = new Random(); 
-		return list.get(rand.nextInt(list.size()));
+		//Random rand = new Random(); 
+		Collections.shuffle(list);
+		return list.get(0);
 	}
 	
 	/**
@@ -217,7 +219,6 @@ public class RosterGenerator {
 		Player wild = this.getRandomPlayer(allPlayers);
 		return wild;
 	}
-	}
 	/**
 	 * Return an array of specific positions
 	 * @param position
@@ -235,4 +236,3 @@ public class RosterGenerator {
 	
 
 }
-
