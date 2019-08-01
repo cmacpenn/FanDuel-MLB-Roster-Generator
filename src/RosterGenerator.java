@@ -111,11 +111,6 @@ public class RosterGenerator {
 		
 		Roster roster = new Roster(team);
 		return roster;
-		
-		
-		
-		
-		
 	}
 
 	/**
