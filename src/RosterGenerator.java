@@ -150,7 +150,7 @@ public class RosterGenerator {
 	public Roster rankRosters(ArrayList<Roster> rosters) {
 		ArrayList<Roster> sortedRoster = rosters;
 		Collections.sort(sortedRoster);
-		return sortedRoster.get(0);
+		return sortedRoster.get(sortedRoster.size()-1);
 	}
 
 	/**
