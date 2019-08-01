@@ -81,11 +81,11 @@ public class Roster implements Iterable<Player>, Comparable<Roster> {
 	@Override
 	public int compareTo(Roster roster) {
 		if (this.fantasyPoints > roster.getFantasyPoints()) {
-			return -1;
+			return 1;
 		} else if (this.fantasyPoints == roster.getFantasyPoints()) {
 			return 0;
 		} else {
-			return 1;
+			return -1;
 		}
 
 	}
