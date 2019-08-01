@@ -138,7 +138,6 @@ public class RosterGenerator {
 		} else {
 			return false;
 		}
-		// TODO
 	}
 
 	/**
@@ -149,40 +148,17 @@ public class RosterGenerator {
 	 * @return The roster with the highest number of predicted fantasy points
 	 */
 	public Roster rankRosters(ArrayList<Roster> rosters) {
-		// TODO Calculate fantasy points - calculateLikelyFantasyPoints()
-		// TODO Rank rosters
 		ArrayList<Roster> sortedRoster = rosters;
 		Collections.sort(sortedRoster);
 		return sortedRoster.get(0);
 	}
 
 	/**
-	 * An algorithm to predict the number of fantasy points a team is likely to
-	 * earn.
-	 * 
-	 * @param roster The roster of players to evaluate.
-	 * @return The number of forecasted fantasy points the roster will earn.
-	 */
-	
-	//Add to roster class
-	/*
-	private double calculateLikelyFantasyPoints(Roster roster) {
-		double totalFantasyPoints = 0.0;
-		for (Player p : roster) {
-			totalFantasyPoints += p.getHistory().getAverageFantasyPointsPerGame();
-		}
-		return totalFantasyPoints;
-		
-		// TODO Implement algorithm
-	}
-	*/
-	/**
 	 * Get a random player
 	 * @param list
 	 * @return
 	 */
 	private Player getRandomPlayer(ArrayList<Player> list) {
-		//Random rand = new Random(); 
 		Collections.shuffle(list);
 		return list.get(0);
 	}
@@ -198,11 +174,11 @@ public class RosterGenerator {
 			outfields.add(i);
 		}
 		Collections.shuffle(list);
-		Player[] nonDublicate = new Player[3];
+		Player[] nonDuplicate = new Player[3];
 		for (int j = 0; j < 3; j++) {
-			nonDublicate[j] = outfields.get(j);
+			nonDuplicate[j] = outfields.get(j);
 		}
-		return nonDublicate;
+		return nonDuplicate;
 	}
 	/**
 	 * Return a random player of ones not already used.
