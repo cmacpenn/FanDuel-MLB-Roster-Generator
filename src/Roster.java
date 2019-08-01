@@ -8,7 +8,7 @@ import java.util.Iterator;
  * @author Colin McLaughlin & Kenton Van
  *
  */
-public class Roster implements Iterable<Player>, Comparable<Roster>{
+public class Roster implements Iterable<Player>, Comparable<Roster> {
 
 	// Variables
 	private ArrayList<Player> players;
@@ -21,24 +21,27 @@ public class Roster implements Iterable<Player>, Comparable<Roster>{
 	 * @param players The list of 9 players.
 	 */
 	public Roster(ArrayList<Player> players) {
-		// TODO Check that we have 9 players
-		// TODO Check that we have the right types of players
 		this.players = players;
 		fantasyPoints = this.calculateLikelyFantasyPoints();
 	}
-	
+
+	/**
+	 * Sums the average fantasy points for each player.
+	 * @return The average fantasy points for the team.
+	 */
 	private double calculateLikelyFantasyPoints() {
 		double totalFantasyPoints = 0.0;
 		for (Player p : this.players) {
 			totalFantasyPoints += p.getHistory().getAverageFantasyPointsPerGame();
 		}
 		return totalFantasyPoints;
-		
-		// TODO Implement algorithm
-	}
-	
-	
 
+	}
+
+	/**
+	 * Getter for fantasyPoints
+	 * @return fantasyPoints
+	 */
 	public double getFantasyPoints() {
 		return fantasyPoints;
 	}
@@ -51,35 +54,36 @@ public class Roster implements Iterable<Player>, Comparable<Roster>{
 		Iterator<Player> playerIterator = players.iterator();
 		return playerIterator;
 	}
-	
+
 	@Override
-    public String toString() {
-        int count = 1;
-        if (players.size() == 0) {
-        	return "Roster is Empty. Check Input.";
-        } else {
-		System.out.printf("%-10s%-30s%s%n", "   Player", "Position", "Salary");
-        for (Player p : players){
-        	System.out.printf("%-10s%-30s%s%n", count + ". " + p.getName(), p.getPosition().getPlayerPosition(),
-        			p.getSalary());
-        	count++;
-        }
-		return "Estimated Fantasy Points: " + Double.toString(fantasyPoints);
-        }
-    }
-	
+	/**
+	 * Pretty printing for display in the GUI.
+	 */
+	public String toString() {
+		int count = 1;
+		if (players.size() == 0) {
+			return "Roster is Empty. Check Input.";
+		} else {
+			System.out.printf("%-10s%-30s%s%n", "   Player", "Position", "Salary");
+			for (Player p : players) {
+				System.out.printf("%-10s%-30s%s%n", count + ". " + p.getName(), p.getPosition(), p.getSalary());
+				count++;
+			}
+			return "Estimated Fantasy Points: " + Double.toString(fantasyPoints);
+		}
+	}
+
 	@Override
-    public int compareTo(Roster roster) {
-       if(this.fantasyPoints > roster.getFantasyPoints()) {
-    	   return -1;
-       } else if (this.fantasyPoints == roster.getFantasyPoints()) {
-    	   return 0;
-       }
-       else {
-    	   return 1;
-       }
-        
-    }
+	public int compareTo(Roster roster) {
+		if (this.fantasyPoints > roster.getFantasyPoints()) {
+			return -1;
+		} else if (this.fantasyPoints == roster.getFantasyPoints()) {
+			return 0;
+		} else {
+			return 1;
+		}
+
+	}
 
 	// Methods
 
