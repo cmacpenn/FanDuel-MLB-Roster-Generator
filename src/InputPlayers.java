@@ -40,7 +40,7 @@ public class InputPlayers {
 		this.players = new ArrayList<Player>();
 		for (Player player : allPlayers) {
 			if (player.getHistory().getGames().size() > 0) {
-
+				players.add(player);
 			}
 		}
 	}

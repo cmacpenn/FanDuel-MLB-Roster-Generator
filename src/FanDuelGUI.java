@@ -106,10 +106,25 @@ public class FanDuelGUI {
 		public void actionPerformed(ActionEvent e) {
 			int returnVal = fc.showOpenDialog(frame);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				playerFile = fc.getSelectedFile();
-				generateRosterButton.setEnabled(true);
-				rosterDisplay.setText("You have chosen to upload the following file: " + playerFile.getName()
-						+ ".\n\nPlease click the 'Generate Roster' button to create a FanDuel linup, or 'Upload Player File' to select a different file.");
+				try {
+					playerFile = fc.getSelectedFile();
+					rosterDisplay.setText("Loading player file...");
+					rosterDisplay.update(rosterDisplay.getGraphics());
+					inputPlayers = new InputPlayers(playerFile, mlbDB);
+					if (inputPlayers.getPlayers().size() > 0) {
+						generateRosterButton.setEnabled(true);
+						rosterDisplay.setText(inputPlayers.getPlayers().size()
+								+ " players have been uploaded from the following file: " + playerFile.getName()
+								+ ".\n\nPlease click the 'Generate Roster' button to create a FanDuel linup, or 'Upload Player File' to select a different file.");
+					} else {
+						rosterDisplay.setText(
+								"Error: Could not load any players from the file.  Please choose a different file.");
+					}
+				} catch (FileNotFoundException | IllegalArgumentException | FileFormatException | SQLException e1) {
+					rosterDisplay.setText(
+							"The program has encountered an error loading the player data.\nPlease correct the error and relaunch the program.\nError: "
+									+ e1.getMessage());
+				}
 			}
 		}
 
@@ -119,30 +134,24 @@ public class FanDuelGUI {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			try {
-				rosterDisplay.setText(
-						"Running the algorithm to generate a roster likely to earn a high number of fantasy points.");
-				inputPlayers = new InputPlayers(playerFile, mlbDB);
-				suggestedRoster = new RosterGenerator(inputPlayers.getPlayers()).getRosterSuggestion();
-				rosterDisplay.setText(suggestedRoster.toString());
-			} catch (FileNotFoundException | IllegalArgumentException | FileFormatException | SQLException e1) {
-				rosterDisplay.setText(
-						"The program has encountered an error calculating the roster.\nPlease correct the error and relaunch the program.\nError: "
-								+ e1.getMessage());
-			}
+
+			rosterDisplay.setText(
+					"Running the algorithm to generate a roster likely to earn a high number of fantasy points.");
+			suggestedRoster = new RosterGenerator(inputPlayers.getPlayers()).getRosterSuggestion();
+			rosterDisplay.setText(suggestedRoster.toString());
 
 		}
 
 	}
-	
+
 	// Main method
 	public static void main(String[] args) {
-		
+
 		String url = "jdbc:h2:mem:";
 		File rawBatterGameData = new File("database/database_batting_game_logs_after_2015.csv");
 		File rawPitcherGameData = new File("database/database_pitching_game_logs_after_2015.csv");
 		File rawPlayerData = new File("database/database_players.csv");
-		
+
 		// Open the GUI
 		new FanDuelGUI(url, rawBatterGameData, rawPitcherGameData, rawPlayerData);
 
