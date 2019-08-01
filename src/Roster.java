@@ -55,6 +55,9 @@ public class Roster implements Iterable<Player>, Comparable<Roster>{
 	@Override
     public String toString() {
         int count = 1;
+        if (players.size() == 0) {
+        	return "Roster is Empty. Check Input.";
+        } else {
 		System.out.printf("%-10s%-30s%s%n", "   Player", "Position", "Salary");
         for (Player p : players){
         	System.out.printf("%-10s%-30s%s%n", count + ". " + p.getName(), p.getPosition().getPlayerPosition(),
@@ -62,6 +65,7 @@ public class Roster implements Iterable<Player>, Comparable<Roster>{
         	count++;
         }
 		return "Estimated Fantasy Points: " + Double.toString(fantasyPoints);
+        }
     }
 	
 	@Override
