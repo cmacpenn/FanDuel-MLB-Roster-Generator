@@ -48,9 +48,16 @@ public class RosterGenerator {
 		// TODO Use an algorithm to assign the number of fantasy points likely to be
 		// earned. Rank the rosters and return the one with the hightest fantasy points
 		// - rankRosters()
-		ArrayList<Roster> manyRosters = this.generateMultipleRandomRosters(400);
+		if (players.size() == 0) {
+			System.out.println("No players have been loaded.");
+			ArrayList<Player> noPlayer = new ArrayList<Player>();
+			Roster emptyRoster = new Roster(noPlayer);
+			return emptyRoster;
+		} else {
+		ArrayList<Roster> manyRosters = this.generateMultipleRandomRosters(1);
 		Roster recommendedRoster = this.rankRosters(manyRosters);
 		return recommendedRoster;
+		}
 	}
 
 	/**
