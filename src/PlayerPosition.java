@@ -5,5 +5,22 @@
  *
  */
 public enum PlayerPosition {
-	PITCHER, CATCHERORFIRSTBASE, SECONDBASE, THIRDBASE, SHORTSTOP, OUTFIELD
+	PITCHER("Pitcher"), CATCHERORFIRSTBASE("CatcherOrFirstBase"), SECONDBASE("SecondBase"), THIRDBASE("ThirdBase"), 
+	SHORTSTOP("ShortStop"), OUTFIELD("OutField");
+	
+	private final String position;
+	
+	PlayerPosition(String position){
+		this.position = position;
+	}
+	
+	public String getPlayerPosition() {
+		return position;
+	}
+	
+	@Override
+    	public String toString() {
+		return this.getPlayerPosition();
+	}
+	
 }
