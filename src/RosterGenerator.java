@@ -201,7 +201,8 @@ public class RosterGenerator {
 	 * @return
 	 */
 	private Player getRandomWild(ArrayList<Player> list) {
-		ArrayList<Player> allPlayers = players;
+		ArrayList<Player> allPlayers = new ArrayList<Player>();
+		allPlayers = (ArrayList<Player>) players.clone();
 		Iterator<Player> iterator = allPlayers.iterator();
 		String pitch = "PITCHER";
 		while (iterator.hasNext()) {
