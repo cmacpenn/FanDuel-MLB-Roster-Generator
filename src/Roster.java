@@ -25,8 +25,10 @@ public class Roster implements Iterable<Player>, Comparable<Roster> {
 		fantasyPoints = this.calculateLikelyFantasyPoints();
 	}
 
+	// Methods
 	/**
 	 * Sums the average fantasy points for each player.
+	 * 
 	 * @return The average fantasy points for the team.
 	 */
 	private double calculateLikelyFantasyPoints() {
@@ -40,6 +42,7 @@ public class Roster implements Iterable<Player>, Comparable<Roster> {
 
 	/**
 	 * Getter for fantasyPoints
+	 * 
 	 * @return fantasyPoints
 	 */
 	public double getFantasyPoints() {
@@ -61,16 +64,18 @@ public class Roster implements Iterable<Player>, Comparable<Roster> {
 	 */
 	public String toString() {
 		int count = 1;
+		String prettyRoster = "";
 		if (players.size() == 0) {
-			return "Roster is Empty. Check Input.";
+			prettyRoster = "Error: Roster is empty. Check input.";
 		} else {
-			System.out.printf("%-10s%-30s%s%n", "   Player", "Position", "Salary");
+			prettyRoster = "FanDuel Roster Results\n\n Estimated fantasy points: " + String.format("%.1f", fantasyPoints);
 			for (Player p : players) {
-				System.out.printf("%-10s%-30s%s%n", count + ". " + p.getName(), p.getPosition(), p.getSalary());
+				prettyRoster += "\n" + count + ". " + p.getName() + " " + p.getPosition() + " $" + String.format("%,d",p.getSalary());
 				count++;
 			}
-			return "Estimated Fantasy Points: " + Double.toString(fantasyPoints);
 		}
+
+		return prettyRoster;
 	}
 
 	@Override
@@ -84,11 +89,5 @@ public class Roster implements Iterable<Player>, Comparable<Roster> {
 		}
 
 	}
-
-	// Methods
-
-	// TODO add getter
-
-	// TODO Add methods to return a specific position?
 
 }
