@@ -90,7 +90,7 @@ public class RosterGenerator {
 		Player[] outfielders = this.getRandomPlayers(outfields);
 		Player outfield1 = outfielders[0];
 		Player outfield2 = outfielders[1];
-		Player outfield3 = outfielders[3];
+		Player outfield3 = outfielders[2];
 		teamNoWild.add(outfield3);
 		teamNoWild.add(outfield2);
 		teamNoWild.add(outfield1);
