@@ -57,6 +57,7 @@ public class Roster implements Iterable<Player>, Comparable<Roster>{
         int count = 1;
 		for (Player p : players){
         	System.out.println(count + ". " + p.getName() + " " + p.getPosition());
+		count++;
         }
 		return "";
     }
