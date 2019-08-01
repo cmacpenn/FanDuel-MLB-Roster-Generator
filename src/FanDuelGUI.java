@@ -60,7 +60,7 @@ public class FanDuelGUI {
 	public void createGUI() {
 		// Frame
 		frame = new JFrame("FanFuel Roster Recs");
-		frame.setPreferredSize(new Dimension(600, 300));
+		frame.setPreferredSize(new Dimension(800, 300));
 		frame.setLayout(new GridLayout(3, 1));
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,7 +115,8 @@ public class FanDuelGUI {
 						generateRosterButton.setEnabled(true);
 						rosterDisplay.setText(inputPlayers.getPlayers().size()
 								+ " players have been uploaded from the following file: " + playerFile.getName()
-								+ ".\n\nPlease click the 'Generate Roster' button to create a FanDuel linup, or 'Upload Player File' to select a different file.");
+								+ "\n\nNote that only players who have played at least one MLB game since 2015 have been imported."
+								+ "\n\nPlease click the 'Generate Roster' button to create a FanDuel linup, or 'Upload Player File' to select a different file.");
 					} else {
 						rosterDisplay.setText(
 								"Error: Could not load any players from the file.  Please choose a different file.");
