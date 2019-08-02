@@ -60,34 +60,62 @@ public class FanDuelGUI {
 	public void createGUI() {
 		// Frame
 		frame = new JFrame("FanFuel Roster Recs");
-		frame.setPreferredSize(new Dimension(800, 300));
-		frame.setLayout(new GridLayout(3, 1));
+		frame.setPreferredSize(new Dimension(500, 300));
+		frame.setLayout(new GridBagLayout());
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		GridBagConstraints c = new GridBagConstraints();
+		
 
 		// Text
 		display = new JLabel("Welcome to the FanDuel Fantasy Baseball Recommender");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 0.5;
+		c.gridwidth = 2;
+		frame.add(display, c);
+		
 		rosterDisplay = new JTextArea("");
 		rosterDisplay.setEnabled(false);
 		rosterDisplay.setLineWrap(true);
 		rosterDisplay.setWrapStyleWord(true);
+		c.gridx = 0;
+		c.gridy = 1;
+		c.weighty = 2;
+		c.weightx = 0.0;
+		c.gridwidth = 2;
+		c.ipady = 40;
+		frame.add(rosterDisplay, c);
+		
 
 		// Buttons
 		uploadPlayerFileButton = new JButton("Upload Player File");
 		uploadPlayerFileButton.setEnabled(false); // This is disabled until the database has been loaded
 		uploadPlayerFileButton.addActionListener(new UploadPlayerListener());
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 1;
+		c.weightx = 0.5;
+		frame.add(uploadPlayerFileButton, c);
+		
 		generateRosterButton = new JButton("Generate Roster");
 		generateRosterButton.setEnabled(false); // This is disabled until the user has loaded a list of players
 		generateRosterButton.addActionListener(new GenerateRosterListener());
+		c.gridx = 1;
+		c.gridy = 2;
+		c.gridwidth = 1;
+		c.weightx = 0.5;
+		frame.add(generateRosterButton, c);
 
 		// Panel
-		JPanel panel = new JPanel(new GridLayout(1, 3));
-		panel.add(uploadPlayerFileButton);
-		panel.add(generateRosterButton);
+		//JPanel panel = new JPanel(new GridLayout(1, 3));
+		//panel.add(uploadPlayerFileButton);
+		//panel.add(generateRosterButton);
 
 		// Add to frame
-		frame.getContentPane().add(display);
-		frame.getContentPane().add(rosterDisplay);
-		frame.getContentPane().add(panel, BorderLayout.SOUTH);
+		//frame.getContentPane().add(display);
+		//frame.getContentPane().add(rosterDisplay);
+		//frame.getContentPane().add(panel, BorderLayout.SOUTH);
 
 		// createComponents(frame.getContentPane());
 
