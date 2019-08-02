@@ -33,7 +33,8 @@ This program depends on the Java H2 database library.  The H2 JAR file is locate
 3. Once the database has finished loading, the 'Upload Player File' button will be enabled.  Click on the button and navigate to the FanDuel player file you want to upload.
 <img src="./images/Recommender Upload.png" width="500">
 
-4. Once a file has been selected, the 'Generate Roster' button will be enabled.  Click on it to run the roster selection algorithm.
+4. Once a file has been selected, the 'Generate Roster' button will be enabled.  Click on it to run the roster selection algorithm.  
+<img src="./images/Recommender Generate.png" width="500">
 
 5.  The roster with the highest predicted fantasy points will be displayed.  Note that since we are evaluating randomly-generated rosters, you can click the 'Generate Roster' button multiple times to re-run the algorithm and get a different roster.  
 <img src="./images/Recommender Results.png" width="500">
