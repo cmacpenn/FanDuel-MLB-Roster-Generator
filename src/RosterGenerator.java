@@ -159,6 +159,10 @@ public class RosterGenerator {
 	private Player getRandomPlayer(ArrayList<Player> list) {
 		Collections.shuffle(list);
 		return list.get(0);
+		
+		//optional way to get random
+		//Random rand = new Random(); 
+		//return list.get(rand.nextInt(list.size()));
 	}
 
 	/**
