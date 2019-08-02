@@ -94,29 +94,37 @@ public class RosterGenerator {
 	public Roster chooseRandomRoster() {
 		ArrayList<Player> team = new ArrayList<Player>();
 		ArrayList<Player> teamNoWild = new ArrayList<Player>();
-		Player pitcher = this.getRandomPlayer(this.pitchers);
-		Player catcherOrFirst = this.getRandomPlayer(this.catcherOrFirsts);
-		Player second = this.getRandomPlayer(this.seconds);
-		Player third = this.getRandomPlayer(this.thirds);
-		Player shortstop = this.getRandomPlayer(this.shorts);
-		Player[] outfielders = this.getRandomPlayers(this.outfields);
-		Player outfield1 = outfielders[0];
-		Player outfield2 = outfielders[1];
-		Player outfield3 = outfielders[2];
-		teamNoWild.add(outfield3);
-		teamNoWild.add(outfield2);
-		teamNoWild.add(outfield1);
-		teamNoWild.add(shortstop);
-		teamNoWild.add(third);
-		teamNoWild.add(second);
-		teamNoWild.add(catcherOrFirst);
-		Player wild = this.getRandomWild(teamNoWild);
-		team = teamNoWild;
-		team.add(pitcher);
-		team.add(wild);
-		
-		Roster roster = new Roster(team);
-		return roster;	
+		if (this.checkPlayers(players, pitchers, seconds, thirds, shorts, 
+				catcherOrFirsts, outfields)) {
+			Player pitcher = this.getRandomPlayer(this.pitchers);
+			Player catcherOrFirst = this.getRandomPlayer(this.catcherOrFirsts);
+			Player second = this.getRandomPlayer(this.seconds);
+			Player third = this.getRandomPlayer(this.thirds);
+			Player shortstop = this.getRandomPlayer(this.shorts);
+			Player[] outfielders = this.getRandomPlayers(this.outfields);
+			Player outfield1 = outfielders[0];
+			Player outfield2 = outfielders[1];
+			Player outfield3 = outfielders[2];
+			teamNoWild.add(outfield3);
+			teamNoWild.add(outfield2);
+			teamNoWild.add(outfield1);
+			teamNoWild.add(shortstop);
+			teamNoWild.add(third);
+			teamNoWild.add(second);
+			teamNoWild.add(catcherOrFirst);
+			Player wild = this.getRandomWild(teamNoWild);
+			team = teamNoWild;
+			team.add(pitcher);
+			team.add(wild);
+			
+			Roster roster = new Roster(team);
+			return roster;	
+			}
+		Roster notEnoughPlayers = new Roster(team);
+		System.out.println("Error: Not enough players");
+		return notEnoughPlayers;
+			
+		}	
 		
 	}
 
@@ -215,6 +223,29 @@ public class RosterGenerator {
 			}		
 		} return generate;
 	}
+	/**
+	 * Check that the array of players have enough for one team
+	 * @param p
+	 * @param p1
+	 * @param p2
+	 * @param p3
+	 * @param p4
+	 * @param p5
+	 * @param p6
+	 * @return
+	 */
+	private boolean checkPlayers(ArrayList<Player> p, ArrayList<Player> p1,
+			ArrayList<Player> p2, ArrayList<Player> p3, ArrayList<Player> p4,
+			ArrayList<Player> p5, ArrayList<Player> p6) {
+		if (p.size() >= 9 && p1.size() >= 1 && p2.size() >= 1 
+				&& p3.size() >= 1 && p4.size() >=1 && 
+				p5.size() >= 1 && p6.size() >= 3) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	
 
 }
