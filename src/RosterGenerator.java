@@ -44,10 +44,6 @@ public class RosterGenerator {
 	 * @return The suggested FanDuel roster that will maximize fantasy points.
 	 */
 	public Roster getRosterSuggestion() {
-		// TODO Generate a list of random rosters - generateMultipleRandomRosters()
-		// TODO Use an algorithm to assign the number of fantasy points likely to be
-		// earned. Rank the rosters and return the one with the hightest fantasy points
-		// - rankRosters()
 		if (players.size() == 0) {
 			ArrayList<Player> noPlayer = new ArrayList<Player>();
 			Roster emptyRoster = new Roster(noPlayer);
@@ -70,9 +66,6 @@ public class RosterGenerator {
 	 * @return
 	 */
 	public ArrayList<Roster> generateMultipleRandomRosters(int n) {
-		// TODO Create the roster with the correct positions - chooseRandomRoster()
-		// TODO Verify that the roster is under the salary cap -
-		// isRosterUnderSalaryCap()
 		ArrayList<Roster> rosters = new ArrayList<Roster>();
 		int count = 0;
 		while (count < n) {
@@ -132,9 +125,7 @@ public class RosterGenerator {
 	 * @return True, if the roster has a combined salary under the SALARYCAP. False
 	 *         otherwise.
 	 */
-	// TODO Revert to private non-static when tests are done. Temporary fix for
-	// testing deliverable.
-	public static boolean isRosterUnderSalaryCap(Roster roster) {
+	private boolean isRosterUnderSalaryCap(Roster roster) {
 		int totalSalary = 0;
 		for (Player player : roster) {
 			totalSalary += player.getSalary();
@@ -241,10 +232,15 @@ public class RosterGenerator {
 	 * @param p6
 	 * @return
 	 */
-	private boolean checkPlayers(ArrayList<Player> p, ArrayList<Player> p1, ArrayList<Player> p2, ArrayList<Player> p3,
-			ArrayList<Player> p4, ArrayList<Player> p5, ArrayList<Player> p6) {
-		if (p.size() >= 9 && p1.size() >= 1 && p2.size() >= 1 && p3.size() >= 1 && p4.size() >= 1 && p5.size() >= 1
-				&& p6.size() >= 3) {
+
+	private boolean checkPlayers(ArrayList<Player> p, ArrayList<Player> p1,
+			ArrayList<Player> p2, ArrayList<Player> p3, ArrayList<Player> p4,
+			ArrayList<Player> p5, ArrayList<Player> p6) {
+		int wildSize = p2.size() + p3.size() + p4.size() +
+					p5.size() + p6.size();
+		if (p.size() >= 9 && p1.size() >= 1 && p2.size() >= 1 
+				&& p3.size() >= 1 && p4.size() >=1 && 
+				p5.size() >= 1 && p6.size() >= 3 && wildSize >= 8) {
 			return true;
 		} else {
 			return false;
