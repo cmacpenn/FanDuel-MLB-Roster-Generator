@@ -111,10 +111,10 @@ public class RosterGenerator {
 
 			Roster roster = new Roster(team);
 			return roster;
-		}
+		} else {
 		Roster notEnoughPlayers = new Roster(team);
-		System.out.println("Error: Not enough players");
 		return notEnoughPlayers;
+		}
 
 	}
 
