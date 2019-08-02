@@ -53,7 +53,7 @@ public class RosterGenerator {
 			Roster emptyRoster = new Roster(noPlayer);
 			return emptyRoster;
 		} else {
-		ArrayList<Roster> manyRosters = this.generateMultipleRandomRosters(10000);
+		ArrayList<Roster> manyRosters = this.generateMultipleRandomRosters(100);
 		Roster recommendedRoster = this.rankRosters(manyRosters);
 		return recommendedRoster;
 		}
@@ -237,9 +237,11 @@ public class RosterGenerator {
 	private boolean checkPlayers(ArrayList<Player> p, ArrayList<Player> p1,
 			ArrayList<Player> p2, ArrayList<Player> p3, ArrayList<Player> p4,
 			ArrayList<Player> p5, ArrayList<Player> p6) {
+		int wildSize = p2.size() + p3.size() + p4.size() +
+					p5.size() + p6.size();
 		if (p.size() >= 9 && p1.size() >= 1 && p2.size() >= 1 
 				&& p3.size() >= 1 && p4.size() >=1 && 
-				p5.size() >= 1 && p6.size() >= 3) {
+				p5.size() >= 1 && p6.size() >= 3 && wildSize >= 8) {
 			return true;
 		} else {
 			return false;
