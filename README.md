@@ -35,7 +35,9 @@ This program depends on the Java H2 database library.  The H2 JAR file is locate
 
 4. Once a file has been selected, the 'Generate Roster' button will be enabled.  Click on it to run the roster selection algorithm.
 
-5.  RESULTS GO HERE!!!!
+5.  The roster with the highest predicted fantasy points will be displayed.  Note that since we are evaluating randomly-generated rosters, you can click the 'Generate Roster' button multiple times to re-run the algorithm and get a different roster.  
+<img src="./images/Recommender Results.png" width="500">
+
 
 ## Authors
 
