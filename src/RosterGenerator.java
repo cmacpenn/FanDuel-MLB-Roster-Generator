@@ -126,7 +126,7 @@ public class RosterGenerator {
 			
 		}	
 		
-	}
+	
 
 	/**
 	 * Checks whether the proposed roster is under the salary cap.
