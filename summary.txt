@@ -1,0 +1,26 @@
+FanDuel MLB Roster Generator
+
+
+This project was designed to give a user a recommended roster of players for fantasy baseball for a given game day. This project sorts through historical 
+game data of players and combines that data with data from FanDuel. FanDuel provides a list of players, along with FanDuel-assigned salaries, that are available for that specific day of Fantasy Baseball. The program creates a list of player objects with fantasy-points, based on historical game data and separated into categories of batters/pitchers, along with their position, ID, and salary. The program then generates randomized rosters based on defined number of positions  (1 pitcher, 1 centerOrFirstBase, 1 2nd base, 1 3rd base, 1 short stop, 3 out fielders, and one wild type of player that can be any position but pitcher). The program then sorts the rosters based on total collected historical fantasy points, and returns the highest of those randomized rosters. 
+
+The user will interact with the GUI, waiting for the database of historical data to load, uploading the FanDuel file for the available players of the day, and once loaded generating a roster. The user is then free to use the suggested roster for informing one's Fantasy team. 
+
+Work breakdown:
+	Project Manager: Kenton Van
+	General GUI: Colin McLaughlin
+	GUI Listener Methods: Kenton Van
+	Recommendation algorithm: Colin McLaughlin
+	Data set/database: Kenton Van
+	Utility functions for querying data from the data set: Kenton Van
+	README: Kenton Van
+	Summary: Colin McLaughlin
+	JUnit: Kenton Van / Colin McLaughlin
+
+
+
+
+
+GitHub: https://github.com/cit-591/final-project-summer-2019-kenton-and-colin
+
+FanDuel: https://www.fanduel.com
