@@ -1,74 +1,78 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class RosterGeneratorTest {
+	
+	static MLBDatabase db;
+	static InputPlayers players;
 
-	/**
-	 * This test tests that the method returns true for gross salary under 35k.
-	 */
-	@Test
-	void testIsRosterUnderSalaryCap1() {
-		Player one = new Player("Bob", 1000, PlayerPosition.PITCHER, null);
-		Player two = new Player("James", 1000, PlayerPosition.CENTERORFIRSTBASE, null);
-		Player three = new Player("Kurt", 1000, PlayerPosition.SECONDBASE, null);
-		Player four = new Player("Bill", 1000, PlayerPosition.THIRDBASE, null);
-		Player five = new Player("Eric", 1000, PlayerPosition.SHORTSTOP, null);
-		Player six = new Player("Sam", 1000, PlayerPosition.OUTFIELD, null);
-		Player seven = new Player("James", 1000, PlayerPosition.OUTFIELD, null);
-		Player eight = new Player("Richard", 1000, PlayerPosition.OUTFIELD, null);
-		Player nine = new Player("Carter", 1000, PlayerPosition.UTILITY, null);
-		ArrayList<Player> players = new ArrayList<Player>();
-		players.add(one);
-		players.add(two);
-		players.add(three);
-		players.add(four);
-		players.add(five);
-		players.add(six);
-		players.add(seven);
-		players.add(eight);
-		players.add(nine);
-		Roster roster = new Roster(players);
-
-		boolean expected = true;
-		boolean actual = RosterGenerator.isRosterUnderSalaryCap(roster);
-		assertEquals(expected, actual);
-
+	@BeforeAll
+	static void setUpBeforeClass() throws Exception {
+		// Load the database
+		String url = "jdbc:h2:mem:";
+		File rawBatterGameData = new File("database/database_batting_game_logs_after_2015.csv");
+		File rawPitcherGameData = new File("database/database_pitching_game_logs_after_2015.csv");
+		File rawPlayerData = new File("database/database_players.csv");
+		try {
+			db = new MLBDatabase(url, rawBatterGameData, rawPitcherGameData, rawPlayerData);
+		} catch (SQLException e) {
+			fail("Failed to create database with the correct tables. Exception: " + e.toString());
+		} catch (IOException e) {
+			fail("Problem with data file. Exception: " + e.toString());
+		}
+		
+		// Load the players
+		File inputFile = new File("input/FanDuel-MLB-2019-07-22-37097-players-list.csv");
+		try {
+			players = new InputPlayers(inputFile, db);
+		} catch (FileNotFoundException e) {
+			fail(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			fail(e.getMessage());
+		} catch (FileFormatException e) {
+			fail(e.getMessage());
+		} catch (SQLException e) {
+			fail(e.getMessage());
+		}
 	}
-
-	/**
-	 * This test tests that gross salary returns false when over 35k.
-	 */
+	
 	@Test
-	void testIsRosterUnderSalaryCap2() {
-		Player one = new Player("Bob", 100000, PlayerPosition.PITCHER, null);
-		Player two = new Player("James", 1000, PlayerPosition.CENTERORFIRSTBASE, null);
-		Player three = new Player("Kurt", 1000, PlayerPosition.SECONDBASE, null);
-		Player four = new Player("Bill", 1000, PlayerPosition.THIRDBASE, null);
-		Player five = new Player("Eric", 1000, PlayerPosition.SHORTSTOP, null);
-		Player six = new Player("Sam", 1000, PlayerPosition.OUTFIELD, null);
-		Player seven = new Player("James", 1000, PlayerPosition.OUTFIELD, null);
-		Player eight = new Player("Richard", 1000, PlayerPosition.OUTFIELD, null);
-		Player nine = new Player("Carter", 1000, PlayerPosition.UTILITY, null);
-
-		ArrayList<Player> players = new ArrayList<>();
-		players.add(one);
-		players.add(two);
-		players.add(three);
-		players.add(four);
-		players.add(five);
-		players.add(six);
-		players.add(seven);
-		players.add(eight);
-		players.add(nine);
-		Roster roster = new Roster(players);
-
-		boolean expected = false;
-		boolean actual = RosterGenerator.isRosterUnderSalaryCap(roster);
-		assertEquals(expected, actual);
-
+	/**
+	 * Make sure we return an empty roster if no players are given
+	 */
+	void testEmptyRoster() {
+		ArrayList<Player> noPlayers = new ArrayList<Player>();
+		RosterGenerator rg = new RosterGenerator(noPlayers);
+		int expectedSize = 0;
+		int actualSize = 0;
+		Roster suggestedRoster = rg.getRosterSuggestion();
+		for(Player p : suggestedRoster) {
+			actualSize ++;
+		}
+		assertEquals(expectedSize, actualSize);
+	}
+	
+	@Test
+	/**
+	 * Make sure that our Roster has 9 players
+	 */
+	void testRosterSize() {
+		RosterGenerator rg = new RosterGenerator(players.getPlayers());
+		int expectedSize = 9;
+		int actualSize = 0;
+		Roster suggestedRoster = rg.getRosterSuggestion();
+		for(Player p : suggestedRoster) {
+			actualSize ++;
+		}
+		assertEquals(expectedSize, actualSize);
 	}
 
 }
