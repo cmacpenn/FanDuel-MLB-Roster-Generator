@@ -29,6 +29,7 @@ class InputPlayersTest {
 	}
 
 	@Test
+	// Make sure we can load everything correctly
 	void testInputPlayers() {
 		try {
 			InputPlayers testInput = new InputPlayers(inputFile, db);
@@ -36,6 +37,60 @@ class InputPlayersTest {
 			fail(e.getMessage());
 		} catch (IllegalArgumentException e) {
 			fail(e.getMessage());
+		} catch (FileFormatException e) {
+			fail(e.getMessage());
+		} catch (SQLException e) {
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	// Make sure we throw the right error if the file doesn't exist
+	void testInvalidFile() {
+		File imaginaryFile = new File("fileDoesntExist.csv");
+		try {
+			InputPlayers testInput = new InputPlayers(imaginaryFile, db);
+			fail("Test should have failed before this");
+		} catch (FileNotFoundException e) {
+			// Should pass in this case
+		} catch (IllegalArgumentException e) {
+			fail(e.getMessage());
+		} catch (FileFormatException e) {
+			fail(e.getMessage());
+		} catch (SQLException e) {
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	// Make sure we fail if we don't have the right columns
+	void testRightColumns() {
+		File wrongColumns = new File("testInput/WrongColumns.csv");
+		try {
+			InputPlayers testInput = new InputPlayers(wrongColumns, db);
+			fail("Test should have failed before this");
+		} catch (FileNotFoundException e) {
+			fail(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			fail(e.getMessage());
+		} catch (FileFormatException e) {
+			// Should pass in this case
+		} catch (SQLException e) {
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	// Make sure we fail if we have an invalid position
+	void testRightPositions() {
+		File badPositions = new File("testInput/BadPosition.csv");
+		try {
+			InputPlayers testInput = new InputPlayers(badPositions, db);
+			fail("Test should have failed before this");
+		} catch (FileNotFoundException e) {
+			fail(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			// Should pass in this case
 		} catch (FileFormatException e) {
 			fail(e.getMessage());
 		} catch (SQLException e) {
