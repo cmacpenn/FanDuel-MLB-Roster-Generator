@@ -160,9 +160,6 @@ public class RosterGenerator {
 		Collections.shuffle(list);
 		return list.get(0);
 		
-		//optional way to get random
-		//Random rand = new Random(); 
-		//return list.get(rand.nextInt(list.size()));
 	}
 
 	/**
