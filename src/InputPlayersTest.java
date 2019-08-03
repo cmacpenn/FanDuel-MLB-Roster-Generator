@@ -64,7 +64,7 @@ class InputPlayersTest {
 	
 	@Test
 	// Make sure we fail if we don't have the right columns
-	void testRightColumns() {
+	void testColumns() {
 		File wrongColumns = new File("testInput/WrongColumns.csv");
 		try {
 			InputPlayers testInput = new InputPlayers(wrongColumns, db);
@@ -82,10 +82,28 @@ class InputPlayersTest {
 	
 	@Test
 	// Make sure we fail if we have an invalid position
-	void testRightPositions() {
-		File badPositions = new File("testInput/BadPosition.csv");
+	void testPosition() {
+		File badPosition = new File("testInput/BadPosition.csv");
 		try {
-			InputPlayers testInput = new InputPlayers(badPositions, db);
+			InputPlayers testInput = new InputPlayers(badPosition, db);
+			fail("Test should have failed before this");
+		} catch (FileNotFoundException e) {
+			fail(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			// Should pass in this case
+		} catch (FileFormatException e) {
+			fail(e.getMessage());
+		} catch (SQLException e) {
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	// Make sure we fail if we have an invalid salary
+	void testSalary() {
+		File badSalary = new File("testInput/BadSalary.csv");
+		try {
+			InputPlayers testInput = new InputPlayers(badSalary, db);
 			fail("Test should have failed before this");
 		} catch (FileNotFoundException e) {
 			fail(e.getMessage());
